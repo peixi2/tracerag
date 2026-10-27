@@ -1,0 +1,26 @@
+services:
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: tracerag
+      MYSQL_USER: tracerag
+      MYSQL_PASSWORD: tracerag
+      MYSQL_ROOT_PASSWORD: rootpass
+    volumes: [tracerag_mysql:/var/lib/mysql]
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-prootpass"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  app:
+    build: .
+    ports: ["8000:8000"]
+    depends_on:
+      mysql: {condition: service_healthy}
+    environment:
+      DATABASE_URL: mysql+pymysql://tracerag:tracerag@mysql:3306/tracerag?charset=utf8mb4
+      JWT_SECRET: local-tracerag-secret-change-before-production
+      DEMO_PASSWORD: admin123
+volumes:
+  tracerag_mysql:
+

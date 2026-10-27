@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: tracerag-demo
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DEMO_USERNAME
+        value: admin
+      - key: DEMO_PASSWORD
+        sync: false
+      - key: DEEPSEEK_API_KEY
+        sync: false
+      - key: DEEPSEEK_MODEL
+        value: deepseek-chat
+      - key: TZ
+        value: Asia/Shanghai
+
