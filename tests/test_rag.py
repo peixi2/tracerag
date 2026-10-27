@@ -40,3 +40,15 @@ def test_fallback_answer_has_sources(monkeypatch):
     assert result["sources"][0]["key"] == "KB-1"
     assert "【KB-1】" in result["answer"]
     assert len(result["trace"]) == 3
+
+
+def test_jdbc_mysql_environment_is_converted(monkeypatch):
+    monkeypatch.delenv("DATABASE_URL", raising=False)
+    monkeypatch.setenv("DB_URL", "jdbc:mysql://mysql.example.com:12345/defaultdb?sslMode=REQUIRED")
+    monkeypatch.setenv("DB_USERNAME", "demo-user")
+    monkeypatch.setenv("DB_PASSWORD", "p@ss word")
+    from app import database
+
+    assert database.database_url() == (
+        "mysql+pymysql://demo-user:p%40ss+word@mysql.example.com:12345/defaultdb?charset=utf8mb4"
+    )
