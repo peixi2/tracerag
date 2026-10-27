@@ -34,6 +34,7 @@ pytest -q
 - [使用与演示路线](docs/USAGE_GUIDE.md)
 - [RAG 架构与评测](docs/ARCHITECTURE.md)
 - [AI 全栈面试问答](docs/INTERVIEW_GUIDE.md)
+- [岗位要求与项目证据](docs/JOB_ALIGNMENT.md)
 
 ## 真实性边界
 
