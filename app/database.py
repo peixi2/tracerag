@@ -14,7 +14,7 @@ def database_url() -> str:
             username = quote_plus(os.getenv("DB_USERNAME", ""))
             password = quote_plus(os.getenv("DB_PASSWORD", ""))
             port = f":{parsed.port}" if parsed.port else ""
-            database = parsed.path.lstrip("/") or "defaultdb"
+            database = os.getenv("DB_NAME", "tracerag")
             value = f"mysql+pymysql://{username}:{password}@{parsed.hostname}{port}/{database}?charset=utf8mb4"
         else:
             value = "sqlite:///./tracerag.db"
@@ -28,7 +28,7 @@ CONNECT_ARGS = {"check_same_thread": False} if DATABASE_URL.startswith("sqlite")
     "connect_timeout": 8,
     "read_timeout": 15,
     "write_timeout": 15,
-    "ssl": {"check_hostname": False} if os.getenv("DB_URL", "").startswith("jdbc:mysql://") else None,
+    "ssl": {"check_hostname": True} if os.getenv("DB_URL", "").startswith("jdbc:mysql://") else None,
 }
 CONNECT_ARGS = {key: value for key, value in CONNECT_ARGS.items() if value is not None}
 engine = create_engine(DATABASE_URL, pool_pre_ping=True, pool_recycle=300, connect_args=CONNECT_ARGS)

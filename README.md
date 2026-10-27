@@ -13,6 +13,7 @@
 - 可选接入 DeepSeek；未配置、超时或限流时使用确定性 grounded fallback，公开演示始终可用。
 - 固定评测集计算 Recall@4、MRR 和引用覆盖率，结果持久化到数据库。
 - JWT 认证、知识文档新增、查询轨迹与评测历史均写入云 MySQL。
+- 线上数据库使用 TiDB Cloud Starter 的 MySQL 兼容接口，独立 `tracerag` schema，并通过 TLS 校验服务端主机。
 - 内置 12 篇知识文档、8 条支持工单和 6 条评测用例，打开即有真实使用痕迹。
 
 ## 本地运行

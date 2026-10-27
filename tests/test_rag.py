@@ -47,8 +47,9 @@ def test_jdbc_mysql_environment_is_converted(monkeypatch):
     monkeypatch.setenv("DB_URL", "jdbc:mysql://mysql.example.com:12345/defaultdb?sslMode=REQUIRED")
     monkeypatch.setenv("DB_USERNAME", "demo-user")
     monkeypatch.setenv("DB_PASSWORD", "p@ss word")
+    monkeypatch.setenv("DB_NAME", "tracerag")
     from app import database
 
     assert database.database_url() == (
-        "mysql+pymysql://demo-user:p%40ss+word@mysql.example.com:12345/defaultdb?charset=utf8mb4"
+        "mysql+pymysql://demo-user:p%40ss+word@mysql.example.com:12345/tracerag?charset=utf8mb4"
     )
